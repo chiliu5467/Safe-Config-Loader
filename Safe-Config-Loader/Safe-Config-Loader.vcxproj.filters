@@ -15,8 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Safe-Config-Loader.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="ConfigParser.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigParser.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
