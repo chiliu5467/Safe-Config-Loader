@@ -2,16 +2,10 @@
 
 #include "ConfigParser.h"
 
-void TestException()
+void TestException(std::vector<std::string> lines)
 {
     try
     {
-        std::vector<std::string> lines{
-        "width=1920",
-        "height=1080",
-        "fullscreen=true"
-        };
-
         Config config = ParseConfig(lines);
 
         std::cout << "Width: " << config.width << "\n";
@@ -27,6 +21,18 @@ void TestException()
 
 int main()
 {
-    TestException();
+    std::vector<std::string> invalidCase{
+    "width=abc",
+    "height=1080",
+    "fullscreen=true"
+        };
+    std::vector<std::string> validCase{
+    "width=1920",
+    "height=1080",
+    "fullscreen=true"
+    };
+
+    TestException(invalidCase);
+    TestException(validCase);
     return 0;
 }

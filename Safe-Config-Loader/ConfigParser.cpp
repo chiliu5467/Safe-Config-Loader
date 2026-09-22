@@ -1,8 +1,11 @@
 #include "ConfigParser.h"
 
+#include <sstream>
+#include <string>
+
 Config ParseConfig(const std::vector<std::string>& lines)
 {
-    Config config;
+    Config config{};
 
     for (const auto& line : lines)
     {
