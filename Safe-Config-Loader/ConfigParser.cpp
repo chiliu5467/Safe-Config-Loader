@@ -11,28 +11,17 @@ Config ParseConfig(const std::vector<std::string>& lines)
 
         if (std::getline(ss, key, '=') && std::getline(ss, value))
         {
-            try
+            if (key == "width")
             {
-                if (key == "width")
-                {
-                    config.width = std::stoi(value);
-                }
-                else if (key == "height")
-                {
-                    config.height = std::stoi(value);
-                }
-                else if (key == "fullscreen")
-                {
-                    config.fullscreen = (value == "true" || value == "1");
-                }
+                config.width = std::stoi(value);
             }
-            catch (const std::invalid_argument& e)
+            else if (key == "height")
             {
-                std::cerr << "無效的數值格式: [" << key << "] = " << value << "\n";
+                config.height = std::stoi(value);
             }
-            catch (const std::out_of_range& e)
+            else if (key == "fullscreen")
             {
-                std::cerr << "數值超出範圍: [" << key << "] = " << value << "\n";
+                config.fullscreen = (value == "true" || value == "1");
             }
         }
     }
