@@ -1,6 +1,5 @@
 #include "ConfigParser.h"
 
-#include <sstream>
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -34,11 +33,11 @@ Config ParseConfig(const std::vector<std::string>& lines)
         {
             if (value == "true")
             {
-                config.fullscreen = (value == "true" || value == "1");
+                config.fullscreen = true;
             }
             else if (value == "false")
             {
-                config.fullscreen = (value == "false" || value == "0");
+                config.fullscreen = false;
             }
             else
             {

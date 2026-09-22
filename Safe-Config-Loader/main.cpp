@@ -2,7 +2,7 @@
 
 #include "ConfigParser.h"
 
-void TestException(std::vector<std::string> lines)
+void TestException(const std::vector<std::string>& lines)
 {
     try
     {
@@ -35,7 +35,7 @@ int main()
     "fullscreen=true"
     };
 
-    std::vector<std::string> unkownKeyCase{
+    std::vector<std::string> unknownKeyCase{
     "volume=80",
     "height=1080",
     "fullscreen=true"
@@ -56,7 +56,7 @@ int main()
     TestException(validCase);
     TestException(invalidIntegerCase);
     TestException(missingCase);
-    TestException(unkownKeyCase);
+    TestException(unknownKeyCase);
     TestException(validFalseCase);
     TestException(invalidBooleanCase);
 
