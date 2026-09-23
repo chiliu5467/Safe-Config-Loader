@@ -12,9 +12,6 @@ class ConfigFormatError : public ConfigError
 {
 public:
     using ConfigError::ConfigError;
-
-private:
-	std::string error;
 };
 
 class ConfigValueError : public ConfigError

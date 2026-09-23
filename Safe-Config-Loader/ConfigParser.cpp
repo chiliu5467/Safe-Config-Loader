@@ -27,7 +27,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
             try {
                 config.width = std::stoi(value);
             }
-            catch (const std::invalid_argument& e) {
+            catch (const std::invalid_argument&) {
                 throw ConfigValueError("Invalid numeric value for: " + key);
             }
         }
@@ -36,7 +36,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
             try {
                 config.height = std::stoi(value);
             }
-            catch (const std::exception&) {
+            catch (const std::invalid_argument&) {
 				throw ConfigValueError("Invalid numeric value for: " + key);
             }
         }
