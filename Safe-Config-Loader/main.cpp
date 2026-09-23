@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 
 #include "ConfigParser.h"
+#include "ConfigError.h"
 
 void TestException(const std::vector<std::string>& lines)
 {
@@ -8,9 +9,19 @@ void TestException(const std::vector<std::string>& lines)
     {
         Config config = ParseConfig(lines);
     }
+    catch (const ConfigValueError& e)
+    {
+        std::cout << "Config Value error: "
+            << e.what() << '\n';
+    }
+    catch (const ConfigFormatError& e)
+    {
+        std::cout << "Config Format error: "
+            << e.what() << '\n';
+    }
     catch (const std::exception& e)
     {
-        std::cout << "Config error: "
+        std::cout << "Some other std::exception error: "
             << e.what() << '\n';
     }
 }

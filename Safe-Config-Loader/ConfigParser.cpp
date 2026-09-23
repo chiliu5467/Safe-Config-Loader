@@ -1,4 +1,5 @@
 #include "ConfigParser.h"
+#include "ConfigError.h"
 
 #include <string>
 #include <stdexcept>
@@ -13,7 +14,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
         auto separator = line.find('=');
         if (separator == std::string::npos)
         {
-            throw std::runtime_error("Invalid config format");
+            throw ConfigFormatError("Invalid config format");
         }
 
         std::string key = line.substr(0, separator);
@@ -23,11 +24,21 @@ Config ParseConfig(const std::vector<std::string>& lines)
 
         if (key == "width")
         {
-            config.width = std::stoi(value);
+            try {
+                config.width = std::stoi(value);
+            }
+            catch (const std::invalid_argument& e) {
+                throw ConfigValueError("Invalid numeric value for: " + key);
+            }
         }
         else if (key == "height")
         {
-            config.height = std::stoi(value);
+            try {
+                config.height = std::stoi(value);
+            }
+            catch (const std::exception&) {
+				throw ConfigValueError("Invalid numeric value for: " + key);
+            }
         }
         else if (key == "fullscreen")
         {
@@ -41,12 +52,12 @@ Config ParseConfig(const std::vector<std::string>& lines)
             }
             else
             {
-                throw std::runtime_error("Invalid boolean value: " + value);
+                throw ConfigValueError("Invalid boolean value: " + value);
             }
         }
         else
         {
-            throw std::runtime_error("Unknown config key: " + key);
+            throw ConfigValueError("Unknown config key: " + key);
         }
     }
 
