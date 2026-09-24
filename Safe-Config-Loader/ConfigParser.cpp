@@ -63,3 +63,33 @@ Config ParseConfig(const std::vector<std::string>& lines)
 
     return config;
 }
+
+bool TryLoadConfig(
+    const std::vector<std::string>& lines,
+    Config& output) noexcept
+{
+    try
+    {
+		Config temp = ParseConfig(lines);
+        output = temp;
+		return true;
+    }
+    catch (const ConfigValueError& e)
+    {
+        std::cout << "Config Value error: "
+            << e.what() << '\n';
+        return false;
+    }
+    catch (const ConfigFormatError& e)
+    {
+        std::cout << "Config Format error: "
+            << e.what() << '\n';
+		return false;
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << "Some other std::exception error: "
+            << e.what() << '\n';
+		return false;
+    }
+}

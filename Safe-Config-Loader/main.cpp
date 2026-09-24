@@ -26,6 +26,31 @@ void TestException(const std::vector<std::string>& lines)
     }
 }
 
+void TestNoExcept()
+{
+    std::vector<std::string> lines{
+        "width=1920",
+        "height=abc",
+        "fullscreen=true"
+    };
+
+    Config config{ 800, 600, false };
+
+    bool success = TryLoadConfig(lines, config);
+
+    if (success)
+    {
+        std::cout << "Load success!\n";
+        std::cout << "width: " << config.width << '\n';
+        std::cout << "height: " << config.height << '\n';
+        std::cout << "fullscreen: " << config.fullscreen << '\n';
+    }
+    else
+    {
+        std::cout << "Load failed!\n";
+    }
+}
+
 int main()
 {
     std::vector<std::string> validCase{
@@ -70,6 +95,7 @@ int main()
     TestException(unknownKeyCase);
     TestException(validFalseCase);
     TestException(invalidBooleanCase);
+    TestNoExcept();
 
     return 0;
 }
