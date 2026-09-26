@@ -3,11 +3,19 @@
 #include "ConfigParser.h"
 #include "ConfigError.h"
 
-void TestException(const std::vector<std::string>& lines)
+void TestException(const std::string& testName, const std::vector<std::string>& lines)
 {
+    std::cout << "=== " << testName << " ===\n";
+
     try
     {
         Config config = ParseConfig(lines);
+        std::cout << "PASS\n";
+        std::cout << "width: " << config.width << '\n';
+        std::cout << "height: " << config.height << '\n';
+        std::cout << "fullscreen: "
+            << std::boolalpha
+            << config.fullscreen << '\n';
     }
     catch (const ConfigValueError& e)
     {
@@ -92,15 +100,15 @@ int main()
     "fullscreen=yes"
     };
 
-    TestException(validCase);
-    TestException(validFalseCase);
-    TestException(invalidIntegerCase);
-    TestException(invalidIntegerCase2);
-    TestException(missingCase);
-    TestException(unknownKeyCase);
-    TestException(invalidBooleanCase);
+    TestException("Valid config", validCase);
+    TestException("Valid config with false fullScreen", validFalseCase);
+    TestException("Invalid width", invalidIntegerCase);
+    TestException("Invalid height", invalidIntegerCase2);
+    TestException("Missing '='", missingCase);
+    TestException("Unknown key", unknownKeyCase);
+    TestException("Invalid boolean", invalidBooleanCase);
 
-    std::cout << "\n";
+    std::cout << "=\n";
 	std::cout << "=== Now testing TryLoadConfig ===\n";
     TestNoExcept(invalidIntegerCase);
     TestNoExcept(validCase);
