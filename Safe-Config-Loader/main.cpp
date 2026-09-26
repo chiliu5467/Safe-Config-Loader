@@ -26,14 +26,8 @@ void TestException(const std::vector<std::string>& lines)
     }
 }
 
-void TestNoExcept()
+void TestNoExcept(const std::vector<std::string>& lines)
 {
-    std::vector<std::string> lines{
-        "width=1920",
-        "height=abc",
-        "fullscreen=true"
-    };
-
     Config config{ 800, 600, false };
 
     bool success = TryLoadConfig(lines, config);
@@ -48,6 +42,9 @@ void TestNoExcept()
     else
     {
         std::cout << "Load failed!\n";
+        std::cout << "width: " << config.width << '\n';
+        std::cout << "height: " << config.height << '\n';
+        std::cout << "fullscreen: " << config.fullscreen << '\n';
     }
 }
 
@@ -59,9 +56,21 @@ int main()
     "fullscreen=true"
     };
 
+    std::vector<std::string> validFalseCase{
+    "width=1920",
+    "height=1080",
+    "fullscreen=false"
+    };
+
     std::vector<std::string> invalidIntegerCase{
     "width=abc",
     "height=1080",
+    "fullscreen=true"
+    };
+
+    std::vector<std::string> invalidIntegerCase2{
+    "width=1920",
+    "height=hello",
     "fullscreen=true"
     };
 
@@ -77,12 +86,6 @@ int main()
     "fullscreen=true"
     };
 
-    std::vector<std::string> validFalseCase{
-    "width=1920",
-    "height=1080",
-    "fullscreen=false"
-    };
-
     std::vector<std::string> invalidBooleanCase{
     "width=1920",
     "height=1080",
@@ -90,12 +93,17 @@ int main()
     };
 
     TestException(validCase);
+    TestException(validFalseCase);
     TestException(invalidIntegerCase);
+    TestException(invalidIntegerCase2);
     TestException(missingCase);
     TestException(unknownKeyCase);
-    TestException(validFalseCase);
     TestException(invalidBooleanCase);
-    TestNoExcept();
+
+    std::cout << "\n";
+	std::cout << "=== Now testing TryLoadConfig ===\n";
+    TestNoExcept(invalidIntegerCase);
+    TestNoExcept(validCase);
 
     return 0;
 }

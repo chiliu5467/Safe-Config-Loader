@@ -20,8 +20,6 @@ Config ParseConfig(const std::vector<std::string>& lines)
         std::string key = line.substr(0, separator);
         std::string value = line.substr(separator + 1);
 
-        std::cout << "Key: [" << key << "], Value: [" << value << "]\n";
-
         if (key == "width")
         {
             try {
@@ -29,6 +27,9 @@ Config ParseConfig(const std::vector<std::string>& lines)
             }
             catch (const std::invalid_argument&) {
                 throw ConfigValueError("Invalid numeric value for: " + key);
+            }
+            catch (const std::out_of_range) {
+				throw ConfigValueError("Numeric value out of range for: " + key);
             }
         }
         else if (key == "height")
@@ -38,6 +39,9 @@ Config ParseConfig(const std::vector<std::string>& lines)
             }
             catch (const std::invalid_argument&) {
 				throw ConfigValueError("Invalid numeric value for: " + key);
+            }
+            catch (const std::out_of_range) {
+                throw ConfigValueError("Numeric value out of range for: " + key);
             }
         }
         else if (key == "fullscreen")
@@ -66,7 +70,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
 
 bool TryLoadConfig(
     const std::vector<std::string>& lines,
-    Config& output) noexcept
+    Config& output)
 {
     try
     {
