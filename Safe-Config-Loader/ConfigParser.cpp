@@ -28,7 +28,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
             catch (const std::invalid_argument&) {
                 throw ConfigValueError("Invalid numeric value for: " + key);
             }
-            catch (const std::out_of_range) {
+            catch (const std::out_of_range&) {
 				throw ConfigValueError("Numeric value out of range for: " + key);
             }
         }
@@ -40,7 +40,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
             catch (const std::invalid_argument&) {
 				throw ConfigValueError("Invalid numeric value for: " + key);
             }
-            catch (const std::out_of_range) {
+            catch (const std::out_of_range&) {
                 throw ConfigValueError("Numeric value out of range for: " + key);
             }
         }
@@ -70,7 +70,7 @@ Config ParseConfig(const std::vector<std::string>& lines)
 
 bool TryLoadConfig(
     const std::vector<std::string>& lines,
-    Config& output)
+    Config& output) noexcept
 {
     try
     {
